@@ -1,10 +1,12 @@
-import { Button, Col, DatePicker, Form, Input, Row, theme } from 'antd';
+import { AutoComplete, Button, Col, DatePicker, Form, Input, Row, theme } from 'antd';
+import type { indicatorFormType, stockType } from '@/types';
 
 interface IndicatorFormProps {
-  onFinish: (values: any) => void;
+  stocks: stockType[];
+  onFinish: (values: indicatorFormType) => void;
 }
 
-export default function IndicatorForm({ onFinish }: IndicatorFormProps) {
+export default function IndicatorForm({ stocks, onFinish }: IndicatorFormProps) {
   const { token } = theme.useToken();
   const [form] = Form.useForm();
 
@@ -42,7 +44,18 @@ export default function IndicatorForm({ onFinish }: IndicatorFormProps) {
   ];
 
   return (
-    <Form form={form} name='advanced_search' style={formStyle} onFinish={onFinish}>
+    <Form
+      form={form}
+      name='advanced_search'
+      style={formStyle}
+      onFinish={() =>
+        onFinish({
+          ...form.getFieldsValue(),
+          ticker: stocks.find((stock) => stock.name === form.getFieldValue('ticker'))?.ticker,
+          start_date: form.getFieldValue('start_date').format('YYYY-MM-DD'),
+        })
+      }
+    >
       <Form.Item
         label='종목'
         rules={[
@@ -51,10 +64,12 @@ export default function IndicatorForm({ onFinish }: IndicatorFormProps) {
             message: '종목을 입력해주세요.',
           },
         ]}
-        name='stock'
+        name='ticker'
         required
       >
-        <Input placeholder='종목명' />
+        <AutoComplete options={stocks.map((stock) => ({ value: stock.name }))}>
+          <Input placeholder='종목명' />
+        </AutoComplete>
       </Form.Item>
       <Form.Item
         label='가격'
@@ -64,7 +79,7 @@ export default function IndicatorForm({ onFinish }: IndicatorFormProps) {
             message: '가격을 입력해주세요.',
           },
         ]}
-        name='price'
+        name='asset'
         required
       >
         <Input placeholder='0' type='number' />
@@ -77,7 +92,7 @@ export default function IndicatorForm({ onFinish }: IndicatorFormProps) {
             message: '기간을 선택해주세요.',
           },
         ]}
-        name='date'
+        name='start_date'
         required
       >
         <DatePicker />

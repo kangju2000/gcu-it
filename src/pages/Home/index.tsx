@@ -1,20 +1,8 @@
-import CandleChart from '@/components/common/CandleChart';
 import IndicatorModal from '@/components/domains/IndicatorModal';
-import { Button } from 'antd';
+import { Button, Card, Col, Row } from 'antd';
+import axios from 'axios';
 import { useState } from 'react';
-
-// const stocks = [
-//   '삼성전자',
-//   'LG전자',
-//   'SK하이닉스',
-//   '카카오',
-//   'NAVER',
-//   '현대자동차',
-//   '셀트리온',
-//   'POSCO',
-//   '삼성SDI',
-//   '삼성바이오로직스',
-// ];
+import type { expectedRateType, indicatorFormType } from '@/types';
 
 // const data: [string, number, number, number, number, number, number][] = [
 //   ['20230523', 68500, 68700, 68100, 68400, 8561643, 52.18],
@@ -29,16 +17,32 @@ import { useState } from 'react';
 //   ['20230607', 71300, 71600, 70800, 71200, 10883347, 52.54],
 // ];
 
-type dataType = [string, number, number, number, number, number, number];
+// type dataType = [string, number, number, number, number, number, number];
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [data, setData] = useState<expectedRateType>();
 
-  const data: dataType[] = [];
-
-  const handleFinish = (values: any) => {
+  const handleFinish = (values: indicatorFormType) => {
     setIsModalOpen(false);
-    console.log(values);
+
+    const data = {
+      asset: Number(values.asset),
+      ticker: values.ticker,
+      start_date: values.start_date,
+      buy_mfi_value: Number(values.buy_mfi_value) || '',
+      sell_mfi_value: Number(values.sell_mfi_value) || '',
+      buy_rsi_value: Number(values.buy_rsi_value) || '',
+      sell_rsi_value: Number(values.sell_rsi_value) || '',
+      buy_macd_value: Number(values.buy_macd_value) || '',
+      sell_macd_value: Number(values.sell_macd_value) || '',
+    };
+
+    axios
+      .post('https://port-0-gcu-skill-server-koh2xlirkm67p.sel4.cloudtype.app/test', data)
+      .then((res) => {
+        setData(res.data);
+      });
   };
 
   return (
@@ -53,7 +57,16 @@ export default function Home() {
           예상 수익률 확인하기
         </Button>
       </div>
-      {data.length > 0 && <CandleChart data={data} />}
+      <div>
+        {data && (
+          <>
+            <p>
+              {Math.abs(data.profit)}원 {data.profit > 0 ? '이익' : '손실'}
+            </p>
+            <p>{data.rate}% 의 수익률이 예상됩니다!</p>
+          </>
+        )}
+      </div>
       <IndicatorModal
         isModalOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

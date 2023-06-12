@@ -1,0 +1,31 @@
+{
+  "data": {
+    "stocks": [
+      {
+        "id": 1,
+        "name": "삼성전자",
+        "ticker": "005930.KS"
+      },
+      {
+        "id": 2,
+        "name": "SK하이닉스",
+        "ticker": "000660.KS"
+      },
+      {
+        "id": 3,
+        "name": "LG화학",
+        "ticker": "051910.KS"
+      },
+      {
+        "id": 4,
+        "name": "NAVER",
+        "ticker": "035420.KS"
+      },
+      {
+        "id": 5,
+        "name": "삼성바이오로직스",
+        "ticker": "207940.KS"
+      }
+    ]
+  }
+}

@@ -11,6 +11,39 @@ body {
   padding: 0;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.light-theme {
+  --primary-color: #007bff;
+  --disabled-color: #6c757d;
+  --bodyBackground: #ffffff;
+}
+
+.dark-theme {
+  --primary-color: #000000;
+  --disabled-color: #4a4a4b;
+  --bodyBackground: #000000;
+}
+
+.react-rotating-text-cursor {
+  animation: blinking-cursor 0.8s cubic-bezier(0.68, 0.01, 0.01, 0.99) 0s infinite;
+}
+
+@keyframes blinking-cursor {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 html,
 body,
 div,

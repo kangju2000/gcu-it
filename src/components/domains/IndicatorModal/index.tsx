@@ -1,5 +1,6 @@
 import { Modal } from 'antd';
 import IndicatorForm from '@/components/domains/IndicatorForm';
+import stockData from '@/db/stocks.json';
 
 interface IndicatorModalProps {
   isModalOpen: boolean;
@@ -16,7 +17,7 @@ export default function IndicatorModal({ isModalOpen, onClose, onFinish }: Indic
       footer={null}
       className='w-full'
     >
-      <IndicatorForm onFinish={onFinish} />
+      <IndicatorForm onFinish={onFinish} stocks={stockData.data.stocks} />
     </Modal>
   );
 }
