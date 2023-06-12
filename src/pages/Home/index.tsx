@@ -46,14 +46,14 @@ export default function Home() {
   };
 
   return (
-    <div className='px-5 py-10'>
-      <div className='mb-10 flex flex-col items-center gap-5'>
-        <h2 className='text-[24px]'>
+    <div className="px-5 py-10">
+      <div className="mb-10 flex flex-col items-center gap-5">
+        <h2 className="text-[24px]">
           보조지표를 활용하여
           <br />
           예상 수익률을 확인해보세요!
         </h2>
-        <Button type='primary' onClick={() => setIsModalOpen(true)}>
+        <Button type="primary" onClick={() => setIsModalOpen(true)}>
           예상 수익률 확인하기
         </Button>
       </div>

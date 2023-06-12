@@ -46,7 +46,7 @@ export default function IndicatorForm({ stocks, onFinish }: IndicatorFormProps) 
   return (
     <Form
       form={form}
-      name='advanced_search'
+      name="advanced_search"
       style={formStyle}
       onFinish={() =>
         onFinish({
@@ -57,47 +57,47 @@ export default function IndicatorForm({ stocks, onFinish }: IndicatorFormProps) 
       }
     >
       <Form.Item
-        label='종목'
+        label="종목"
         rules={[
           {
             required: true,
             message: '종목을 입력해주세요.',
           },
         ]}
-        name='ticker'
+        name="ticker"
         required
       >
         <AutoComplete options={stocks.map((stock) => ({ value: stock.name }))}>
-          <Input placeholder='종목명' />
+          <Input placeholder="종목명" />
         </AutoComplete>
       </Form.Item>
       <Form.Item
-        label='가격'
+        label="가격"
         rules={[
           {
             required: true,
             message: '가격을 입력해주세요.',
           },
         ]}
-        name='asset'
+        name="asset"
         required
       >
-        <Input placeholder='0' type='number' />
+        <Input placeholder="0" type="number" />
       </Form.Item>
       <Form.Item
-        label='기간'
+        label="기간"
         rules={[
           {
             required: true,
             message: '기간을 선택해주세요.',
           },
         ]}
-        name='start_date'
+        name="start_date"
         required
       >
         <DatePicker />
       </Form.Item>
-      <hr className='my-4' />
+      <hr className="my-4" />
       <Row gutter={24}>
         {buyOrSell.map((buyOrSell) => (
           <Col key={buyOrSell.label} span={12}>
@@ -108,15 +108,15 @@ export default function IndicatorForm({ stocks, onFinish }: IndicatorFormProps) 
                   name={`${buyOrSell.name}_${indicator.name}_value`}
                   label={indicator.label}
                 >
-                  <Input placeholder='0' type='number' />
+                  <Input placeholder="0" type="number" />
                 </Form.Item>
               ))}
             </Form.Item>
           </Col>
         ))}
       </Row>
-      <div className='text-right'>
-        <Button type='primary' htmlType='submit'>
+      <div className="text-right">
+        <Button type="primary" htmlType="submit">
           결과
         </Button>
       </div>

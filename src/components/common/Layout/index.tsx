@@ -14,7 +14,7 @@ export default function Layout({ children }: PropsWithChildren) {
         algorithm: darkmode ? darkAlgorithm : defaultAlgorithm,
       }}
     >
-      <div className='h-full min-h-screen w-full bg-[#eee]'>
+      <div className="h-full min-h-screen w-full bg-[#eee]">
         <div
           className={`mx-auto min-h-screen min-w-[360px] max-w-[448px] ${
             darkmode ? 'bg-black text-white' : 'bg-white text-black'

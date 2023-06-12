@@ -11,11 +11,11 @@ interface IndicatorModalProps {
 export default function IndicatorModal({ isModalOpen, onClose, onFinish }: IndicatorModalProps) {
   return (
     <Modal
-      title='지표 값 입력'
+      title="지표 값 입력"
       open={isModalOpen}
       onCancel={onClose}
       footer={null}
-      className='w-full'
+      className="w-full"
     >
       <IndicatorForm onFinish={onFinish} stocks={stockData.data.stocks} />
     </Modal>

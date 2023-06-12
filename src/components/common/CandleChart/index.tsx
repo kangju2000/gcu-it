@@ -68,7 +68,7 @@ export default function CandleChart({ data }: CandleChartProps) {
 
   return (
     <div>
-      <ApexCharts type='candlestick' series={series} options={options} />
+      <ApexCharts type="candlestick" series={series} options={options} />
     </div>
   );
 }

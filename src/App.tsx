@@ -9,9 +9,9 @@ function App() {
     <Router>
       <Layout>
         <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/chart' element={<Chart />} />
-          <Route path='*' element={<h1>Not Found</h1>} />
+          <Route path="/" element={<Home />} />
+          <Route path="/chart" element={<Chart />} />
+          <Route path="*" element={<h1>Not Found</h1>} />
         </Routes>
       </Layout>
     </Router>
