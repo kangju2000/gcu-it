@@ -1,31 +1,52 @@
 import { useState } from 'react';
-import { Button, Spin } from 'antd';
+import { Spin, message } from 'antd';
 import ReactRotatingText from 'react-rotating-text';
-import FlexCenter from '@/components/uis/FlexCenter';
 import SimulatorResultBox from '@/components/domains/SimulatorResultBox';
 import SimulatorForm from '@/components/domains/SimulatorForm';
+import stockData from '@/db/stocks.json';
+import axios from 'axios';
+import type { SimulationRequestType, SimulationResultType } from '@/types';
 
-const stocks = ['삼성전자', 'NAVER', '카카오', 'LG전자'];
-const prices = ['100만원', '200만원', '300만원', '1000만원'];
+const stocks = Object.keys(stockData);
+const prices = ['100', '777', '1', '9999', '1234', '1000', '10000'];
 
 export default function Simulator() {
+  const [userData, setUserData] = useState<SimulationRequestType | null>(null);
+  const [resultData, setResultData] = useState<SimulationResultType | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const profit = null;
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const handleFinish = (data: SimulationRequestType) => {
+    setIsLoading(true);
+
+    axios
+      .post('https://port-0-gcu-skill-server-koh2xlirkm67p.sel4.cloudtype.app/how', data)
+      .then((res) => {
+        setUserData(data);
+        setResultData(res.data);
+      })
+      .catch((err) => {
+        messageApi.open({
+          type: 'error',
+          content: '오류가 발생했어요!',
+        });
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
 
   return (
     <div className="px-5 py-10">
       <h1 className="text-[24px]">
-        만약 <ReactRotatingText items={stocks} />를
+        만약 <ReactRotatingText items={stocks} />
         <br />
-        <ReactRotatingText items={prices} />에 샀더라면...
+        <ReactRotatingText items={prices} />
+        주를 샀더라면...
       </h1>
-
-      <SimulatorForm stocks={stocks} />
-      <FlexCenter className="mb-10">
-        <Button type="primary">결과 확인하기</Button>
-      </FlexCenter>
+      <SimulatorForm stocks={stockData} onFinish={handleFinish} />
       <Spin spinning={isLoading}>
-        <SimulatorResultBox profit={profit} />
+        <SimulatorResultBox resultData={resultData} userData={userData} />
       </Spin>
     </div>
   );

@@ -12,7 +12,7 @@ interface IndicatorModalProps {
 export default function IndicatorModal({ isModalOpen, onClose, onFinish }: IndicatorModalProps) {
   return (
     <Modal open={isModalOpen} onCancel={onClose} footer={null} centered>
-      <IndicatorForm onFinish={onFinish} stocks={stockData.data.stocks} />
+      <IndicatorForm onFinish={onFinish} stocks={stockData} />
     </Modal>
   );
 }

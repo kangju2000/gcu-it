@@ -6,3 +6,9 @@ export const INDICATOR = {
   DEFAULT_BUY_MACD: -0.5,
   DEFAULT_SELL_MACD: 0.6,
 } as const;
+
+export const PRICE = {
+  GUKBAP: 8000,
+  CHICKEN: 18000,
+  COFFEE: 4500,
+};

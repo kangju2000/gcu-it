@@ -15,8 +15,15 @@ export type ExpectedRateType = {
   rate: number;
 };
 
-export type StockType = {
-  id: number;
-  name: string;
+export type SimulationRequestType = {
   ticker: string;
+  stock_share: number;
+  buy_date: string;
+};
+
+export type SimulationResultType = {
+  now_price: number;
+  past_price: number;
+  profit: number;
+  rate: number;
 };

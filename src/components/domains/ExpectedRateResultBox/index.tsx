@@ -28,7 +28,7 @@ export default function ExpectedRateResultBox({ userData, resultData }: ResultBo
   return (
     <div>
       <div className="relative mb-5 flex flex-col items-center justify-center border-b-[1px] border-solid border-b-gray-300">
-        <Title level={3}>{stockName || '삼성전자'}</Title>
+        <Title level={3}>{stockName}</Title>
         <Text className="absolute bottom-0 right-0 text-[12px]">{userData.start_date} 기준</Text>
       </div>
       <div className="mb-5 flex flex-col items-center justify-center">

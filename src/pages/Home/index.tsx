@@ -50,18 +50,21 @@ export default function Home() {
       sell_macd_value: f(values.sell_macd_value),
     } as const;
 
+    console.log(data);
+
     axios
       .post('https://port-0-gcu-skill-server-koh2xlirkm67p.sel4.cloudtype.app/test', data)
       .then((res) => {
         setUserData(data);
         setResultData(res.data);
-        setIsLoading(false);
       })
       .catch((err) => {
         messageApi.open({
           type: 'error',
           content: '오류가 발생했어요!',
         });
+      })
+      .finally(() => {
         setIsLoading(false);
       });
   };

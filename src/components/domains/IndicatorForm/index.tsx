@@ -1,14 +1,19 @@
 import { AutoComplete, Button, Col, DatePicker, Form, Input, Row } from 'antd';
 import { useStockNameStore } from '@/store';
 import { INDICATOR } from '@/constants';
-import type { IndicatorFormType, StockType } from '@/types';
+import { useState } from 'react';
+import type { IndicatorFormType } from '@/types';
 
 interface IndicatorFormProps {
-  stocks: StockType[];
+  stocks: any;
   onFinish: (values: IndicatorFormType) => void;
 }
 
 export default function IndicatorForm({ stocks, onFinish }: IndicatorFormProps) {
+  const [options, setOptions] = useState<{ value: string }[]>(
+    Object.keys(stocks).map((stock) => ({ value: stock }))
+  );
+
   const { setStockName } = useStockNameStore();
 
   const [form] = Form.useForm();
@@ -39,10 +44,19 @@ export default function IndicatorForm({ stocks, onFinish }: IndicatorFormProps) 
     },
   ];
 
+  const handleSearch = (value: string) => {
+    setOptions(
+      !value
+        ? []
+        : Object.keys(stocks)
+            .filter((stock) => stock.includes(value))
+            .map((stock) => ({ value: stock }))
+    );
+  };
+
   return (
     <Form
       form={form}
-      name="advanced_search"
       className="p-4"
       onFinish={() => {
         setStockName(form.getFieldValue('stockName'));
@@ -50,7 +64,6 @@ export default function IndicatorForm({ stocks, onFinish }: IndicatorFormProps) 
         onFinish({
           ...form.getFieldsValue([
             'asset',
-            'start_date',
             'buy_mfi_value',
             'sell_mfi_value',
             'buy_rsi_value',
@@ -58,7 +71,8 @@ export default function IndicatorForm({ stocks, onFinish }: IndicatorFormProps) 
             'buy_macd_value',
             'sell_macd_value',
           ]),
-          ticker: stocks.find((stock) => stock.name === form.getFieldValue('stockName'))?.ticker,
+          start_date: form.getFieldValue('start_date').format('YYYY-MM-DD'),
+          ticker: stocks[form.getFieldValue('stockName')].toString().padStart(9, '0'),
         });
       }}
     >
@@ -73,7 +87,7 @@ export default function IndicatorForm({ stocks, onFinish }: IndicatorFormProps) 
         name="stockName"
         required
       >
-        <AutoComplete options={stocks.map((stock) => ({ value: stock.name }))}>
+        <AutoComplete options={options} onSearch={handleSearch}>
           <Input placeholder="종목명 ex) 삼성전자" />
         </AutoComplete>
       </Form.Item>
@@ -102,7 +116,6 @@ export default function IndicatorForm({ stocks, onFinish }: IndicatorFormProps) 
         required
       >
         <DatePicker
-          format="YYYY-MM-DD"
           disabledDate={(current) =>
             current.valueOf() > Date.now() - 40 * 24 * 60 * 60 * 1000 ||
             current.day() === 0 ||
