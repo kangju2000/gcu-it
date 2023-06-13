@@ -11,12 +11,15 @@ export default function Layout({ children }: PropsWithChildren) {
   return (
     <ConfigProvider
       theme={{
+        token: {
+          fontFamily: 'Prentendard',
+        },
         algorithm: darkmode ? darkAlgorithm : defaultAlgorithm,
       }}
     >
       <div className="h-full min-h-screen w-full bg-[#eee]">
         <div
-          className={`mx-auto min-h-screen min-w-[360px] max-w-[448px] transition-all ${
+          className={`mx-auto min-h-screen min-w-[360px] max-w-[448px] transition-colors duration-200 ${
             darkmode ? 'bg-black text-white' : 'bg-white text-black'
           }`}
         >

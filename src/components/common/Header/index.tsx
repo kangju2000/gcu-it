@@ -13,22 +13,23 @@ export default function Header() {
       <Link to="/">
         <img src={gachon} alt="가천대학교" className="h-[24px] w-[24px]" />
       </Link>
-      <FlexCenter className="gap-5">
-        <Link to="/">
-          <p>home</p>
-        </Link>
-        <Link to="/chart">
-          <p>chart</p>
-        </Link>
-
-        <FlexCenter className="cursor-pointer">
+      <FlexCenter className="gap-2">
+        <FlexCenter className="gap-5 text-[14px]">
+          <Link to="/">
+            <p>예상 수익률</p>
+          </Link>
+          <Link to="/라고할때살걸">
+            <p>라고할때 살걸</p>
+          </Link>
+        </FlexCenter>
+        <div className="cursor-pointer">
           <img
             src={darkmode ? sun : moon}
             alt="다크모드"
             onClick={() => setDarkmode(!darkmode)}
             className={`${darkmode ? 'invert filter' : ''}`}
           />
-        </FlexCenter>
+        </div>
       </FlexCenter>
     </div>
   );

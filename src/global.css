@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: Pretendard;
+  src: local('Pretendard') url('./assets/font/PretendardVariable.woff2') format('woff2');
+}
+
+&:root {
+  font-family: Pretendard, '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto',
+    'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic',
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'sans-serif';
+}
+
 * {
   outline: none;
 }
@@ -16,16 +27,9 @@ a {
   color: inherit;
 }
 
-.light-theme {
-  --primary-color: #007bff;
-  --disabled-color: #6c757d;
-  --bodyBackground: #ffffff;
-}
-
-.dark-theme {
-  --primary-color: #000000;
-  --disabled-color: #4a4a4b;
-  --bodyBackground: #000000;
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  opacity: 0;
 }
 
 .react-rotating-text-cursor {

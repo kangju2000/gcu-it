@@ -3,6 +3,7 @@ import { Card, Typography } from 'antd';
 import { useStockNameStore } from '@/store';
 import { INDICATOR } from '@/constants';
 import potato from '@/assets/lottie/potato.json';
+import CountUpBox from '@/components/domains/CountUpBox';
 import type { ExpectedRateType, IndicatorFormType } from '@/types';
 
 interface ResultBoxProps {
@@ -22,23 +23,33 @@ export default function ResultBox({ userData, resultData }: ResultBoxProps) {
     );
   }
 
+  const isProfit = resultData.rate > 0;
+
   return (
     <div>
-      <div className="relative mb-5 flex flex-col items-center justify-center">
-        <Title level={3}>{stockName}</Title>
+      <div className="relative mb-5 flex flex-col items-center justify-center border-b-[1px] border-solid border-b-gray-300">
+        <Title level={3}>{stockName || '삼성전자'}</Title>
         <Text className="absolute bottom-0 right-0 text-[12px]">{userData.start_date} 기준</Text>
       </div>
-      <Card title="예상 결과" bordered={false} className="mb-5">
-        <p>
-          수익률<span className="font-bold"> {resultData.rate}</span>%
-        </p>
-        <p>
+      <div className="mb-5 flex flex-col items-center justify-center">
+        <Title level={4}>예상 수익률</Title>
+        <CountUpBox rate={resultData.rate} />
+        <div className="my-5 grid grid-cols-2">
+          <p>투자자금</p>
+          <span className="text-end font-bold">{userData.asset.toLocaleString('ko-KR')}원</span>
+          <p>최종자산</p>
+          <span className="text-end font-bold">
+            {(userData.asset + resultData.profit).toLocaleString('ko-KR')}원
+          </span>
+        </div>
+
+        <Text>
           <span className="font-bold">
             {Math.abs(resultData.profit).toLocaleString('ko-KR')}원{' '}
           </span>
-          {resultData.profit > 0 ? '이익' : '손실'}
-        </p>
-      </Card>
+          {isProfit ? '이익' : '손실'}
+        </Text>
+      </div>
       <div className="flex justify-center gap-5">
         <Card title="매수 조건" bordered={false} className="w-full">
           <p>

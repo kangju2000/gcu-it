@@ -1,7 +1,7 @@
-import { AutoComplete, Button, Col, DatePicker, Form, Input, Row, theme } from 'antd';
-import type { IndicatorFormType, StockType } from '@/types';
+import { AutoComplete, Button, Col, DatePicker, Form, Input, Row } from 'antd';
 import { useStockNameStore } from '@/store';
 import { INDICATOR } from '@/constants';
+import type { IndicatorFormType, StockType } from '@/types';
 
 interface IndicatorFormProps {
   stocks: StockType[];
@@ -11,15 +11,7 @@ interface IndicatorFormProps {
 export default function IndicatorForm({ stocks, onFinish }: IndicatorFormProps) {
   const { setStockName } = useStockNameStore();
 
-  const { token } = theme.useToken();
   const [form] = Form.useForm();
-
-  const formStyle = {
-    maxWidth: 'none',
-    background: token.colorFillAlter,
-    borderRadius: token.borderRadiusLG,
-    padding: 24,
-  };
 
   const indicators = [
     {
@@ -51,7 +43,7 @@ export default function IndicatorForm({ stocks, onFinish }: IndicatorFormProps) 
     <Form
       form={form}
       name="advanced_search"
-      style={formStyle}
+      className="p-4"
       onFinish={() => {
         setStockName(form.getFieldValue('stockName'));
 
@@ -67,7 +59,6 @@ export default function IndicatorForm({ stocks, onFinish }: IndicatorFormProps) 
             'sell_macd_value',
           ]),
           ticker: stocks.find((stock) => stock.name === form.getFieldValue('stockName'))?.ticker,
-          start_date: form.getFieldValue('start_date').format('YYYY-MM-DD'),
         });
       }}
     >
@@ -83,7 +74,7 @@ export default function IndicatorForm({ stocks, onFinish }: IndicatorFormProps) 
         required
       >
         <AutoComplete options={stocks.map((stock) => ({ value: stock.name }))}>
-          <Input placeholder="종목명" />
+          <Input placeholder="종목명 ex) 삼성전자" />
         </AutoComplete>
       </Form.Item>
       <Form.Item
@@ -100,23 +91,33 @@ export default function IndicatorForm({ stocks, onFinish }: IndicatorFormProps) 
         <Input placeholder="0" type="number" />
       </Form.Item>
       <Form.Item
-        label="기간"
+        label="시작 일시"
         rules={[
           {
             required: true,
-            message: '기간을 선택해주세요.',
+            message: '시작 일시를 선택해주세요.',
           },
         ]}
         name="start_date"
         required
       >
-        <DatePicker />
+        <DatePicker
+          format="YYYY-MM-DD"
+          disabledDate={(current) =>
+            current.valueOf() > Date.now() - 40 * 24 * 60 * 60 * 1000 ||
+            current.day() === 0 ||
+            current.day() === 6
+          }
+          placeholder="XXXX-XX-XX"
+          inputReadOnly
+        />
       </Form.Item>
       <hr className="my-4" />
       <Row gutter={24}>
         {buyOrSell.map((buyOrSell) => (
-          <Col key={buyOrSell.label} span={12}>
-            <Form.Item label={buyOrSell.label}>
+          <Col key={buyOrSell.label} span={12} className="text-center">
+            <h2 className="mb-5 text-[18px]">{buyOrSell.label} 조건</h2>
+            <Form.Item>
               {indicators.map((indicator) => (
                 <Form.Item
                   key={`${buyOrSell.name}_${indicator.name}`}

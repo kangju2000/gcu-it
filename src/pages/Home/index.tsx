@@ -18,8 +18,8 @@ const uData = {
 };
 
 const rData = {
-  profit: 10000,
-  rate: 1,
+  profit: 100000,
+  rate: 10,
 };
 
 const f = (value: any) => {
