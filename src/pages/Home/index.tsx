@@ -79,11 +79,9 @@ export default function Home() {
           예상 수익률 확인하기
         </Button>
       </div>
-      <div>
-        <Spin spinning={isLoading}>
-          <ResultBox userData={userData} resultData={resultData} />
-        </Spin>
-      </div>
+      <Spin spinning={isLoading}>
+        <ResultBox userData={userData} resultData={resultData} />
+      </Spin>
 
       <IndicatorModal
         isModalOpen={isModalOpen}
