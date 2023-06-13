@@ -19,7 +19,7 @@ export default function Header() {
             <p>예상 수익률</p>
           </Link>
           <Link to="/라고할때살걸">
-            <p>라고할때 살걸</p>
+            <p>라고 할 때 살걸</p>
           </Link>
         </FlexCenter>
         <div className="cursor-pointer">
