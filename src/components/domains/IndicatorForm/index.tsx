@@ -1,12 +1,16 @@
 import { AutoComplete, Button, Col, DatePicker, Form, Input, Row, theme } from 'antd';
-import type { indicatorFormType, stockType } from '@/types';
+import type { IndicatorFormType, StockType } from '@/types';
+import { useStockNameStore } from '@/store';
+import { INDICATOR } from '@/constants';
 
 interface IndicatorFormProps {
-  stocks: stockType[];
-  onFinish: (values: indicatorFormType) => void;
+  stocks: StockType[];
+  onFinish: (values: IndicatorFormType) => void;
 }
 
 export default function IndicatorForm({ stocks, onFinish }: IndicatorFormProps) {
+  const { setStockName } = useStockNameStore();
+
   const { token } = theme.useToken();
   const [form] = Form.useForm();
 
@@ -35,11 +39,11 @@ export default function IndicatorForm({ stocks, onFinish }: IndicatorFormProps) 
   const buyOrSell = [
     {
       name: 'buy',
-      label: '구매',
+      label: '매수',
     },
     {
       name: 'sell',
-      label: '판매',
+      label: '매도',
     },
   ];
 
@@ -48,13 +52,24 @@ export default function IndicatorForm({ stocks, onFinish }: IndicatorFormProps) 
       form={form}
       name="advanced_search"
       style={formStyle}
-      onFinish={() =>
+      onFinish={() => {
+        setStockName(form.getFieldValue('stockName'));
+
         onFinish({
-          ...form.getFieldsValue(),
-          ticker: stocks.find((stock) => stock.name === form.getFieldValue('ticker'))?.ticker,
+          ...form.getFieldsValue([
+            'asset',
+            'start_date',
+            'buy_mfi_value',
+            'sell_mfi_value',
+            'buy_rsi_value',
+            'sell_rsi_value',
+            'buy_macd_value',
+            'sell_macd_value',
+          ]),
+          ticker: stocks.find((stock) => stock.name === form.getFieldValue('stockName'))?.ticker,
           start_date: form.getFieldValue('start_date').format('YYYY-MM-DD'),
-        })
-      }
+        });
+      }}
     >
       <Form.Item
         label="종목"
@@ -64,7 +79,7 @@ export default function IndicatorForm({ stocks, onFinish }: IndicatorFormProps) 
             message: '종목을 입력해주세요.',
           },
         ]}
-        name="ticker"
+        name="stockName"
         required
       >
         <AutoComplete options={stocks.map((stock) => ({ value: stock.name }))}>
@@ -108,7 +123,16 @@ export default function IndicatorForm({ stocks, onFinish }: IndicatorFormProps) 
                   name={`${buyOrSell.name}_${indicator.name}_value`}
                   label={indicator.label}
                 >
-                  <Input placeholder="0" type="number" />
+                  <Input
+                    placeholder={String(
+                      INDICATOR[
+                        `DEFAULT_${buyOrSell.name.toUpperCase()}_${
+                          indicator.label
+                        }` as keyof typeof INDICATOR
+                      ]
+                    )}
+                    type="number"
+                  />
                 </Form.Item>
               ))}
             </Form.Item>

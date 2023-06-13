@@ -7,3 +7,11 @@ export const useDarkmodetore = create<{
   darkmode: false,
   setDarkmode: (darkmode: boolean) => set({ darkmode }),
 }));
+
+export const useStockNameStore = create<{
+  stockName: string;
+  setStockName: (stockName: string) => void;
+}>((set) => ({
+  stockName: '',
+  setStockName: (stockName: string) => set({ stockName }),
+}));

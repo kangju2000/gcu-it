@@ -23,6 +23,7 @@ export default function Header() {
             src={darkmode ? '/assets/moon.svg' : '/assets/sun.svg'}
             alt="다크모드"
             onClick={() => setDarkmode(!darkmode)}
+            className={`${darkmode ? 'invert filter' : ''}`}
           />
         </FlexCenter>
       </FlexCenter>

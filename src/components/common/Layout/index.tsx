@@ -16,7 +16,7 @@ export default function Layout({ children }: PropsWithChildren) {
     >
       <div className="h-full min-h-screen w-full bg-[#eee]">
         <div
-          className={`mx-auto min-h-screen min-w-[360px] max-w-[448px] ${
+          className={`mx-auto min-h-screen min-w-[360px] max-w-[448px] transition-all ${
             darkmode ? 'bg-black text-white' : 'bg-white text-black'
           }`}
         >
