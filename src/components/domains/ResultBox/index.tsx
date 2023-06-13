@@ -2,7 +2,7 @@ import Lottie from 'lottie-react';
 import { Card, Typography } from 'antd';
 import { useStockNameStore } from '@/store';
 import { INDICATOR } from '@/constants';
-import potato from '../../../../public/assets/lottie/potato.json';
+import potato from '@/assets/lottie/potato.json';
 import type { ExpectedRateType, IndicatorFormType } from '@/types';
 
 interface ResultBoxProps {
