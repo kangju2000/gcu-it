@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { Button, Spin, message } from 'antd';
 import IndicatorModal from '@/components/domains/IndicatorModal';
-import ResultBox from '@/components/domains/ResultBox';
+import ExpectedRateResultBox from '@/components/domains/ExpectedRateResultBox';
 import type { ExpectedRateType, IndicatorFormType } from '@/types';
 
 const uData = {
@@ -80,7 +80,7 @@ export default function Home() {
         </Button>
       </div>
       <Spin spinning={isLoading}>
-        <ResultBox userData={userData} resultData={resultData} />
+        <ExpectedRateResultBox userData={userData} resultData={resultData} />
       </Spin>
 
       <IndicatorModal

@@ -11,7 +11,7 @@ interface ResultBoxProps {
   resultData: ExpectedRateType | null;
 }
 
-export default function ResultBox({ userData, resultData }: ResultBoxProps) {
+export default function ExpectedRateResultBox({ userData, resultData }: ResultBoxProps) {
   const { stockName } = useStockNameStore();
   const { Title, Text } = Typography;
 
